@@ -1,0 +1,8 @@
+#Web
+/web/node_modules/
+/web/.env
+
+#Server
+/server/node_modules/
+/server/coverage/
+/server/.env
