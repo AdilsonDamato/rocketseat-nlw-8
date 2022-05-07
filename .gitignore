@@ -1,5 +1,7 @@
 #Web
 /web/node_modules/
+/web/.env.local
+/web/.env.development.local
 /web/.env
 
 #Server
