@@ -8,6 +8,7 @@
 /server/node_modules/
 /server/coverage/
 /server/.env
+/server/dist
 
 #Mobile
 /mobile/node_modules/
