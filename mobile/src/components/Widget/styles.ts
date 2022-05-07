@@ -14,4 +14,14 @@ export const styles = StyleSheet.create({
     right: 16,
     bottom: getBottomSpace() + 16,
   },
+
+  modal: {
+    backgroundColor: theme.colors.surface_primary,
+    paddingBottom: getBottomSpace() + 16,
+  },
+
+  indicator: {
+    backgroundColor: theme.colors.text_primary,
+    width: 56,
+  },
 });
