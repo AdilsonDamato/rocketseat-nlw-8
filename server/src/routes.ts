@@ -1,4 +1,4 @@
-import express from "express";
+import express, { ErrorRequestHandler } from "express";
 import { NodemailerMailAdapter } from "./adapters/nodemailer/nodemailer-mail-adapter";
 import { PrismaFeedbacksRepository } from "./repositories/prisma/prisma-feedbacks-repository";
 
@@ -17,11 +17,15 @@ routes.post("/feedbacks", async (req, res) => {
     nodemailerMailAdapter
   );
 
-  await submitFeedbackUseCase.execute({
-    type,
-    comment,
-    screenshot,
-  });
+  try {
+    await submitFeedbackUseCase.execute({
+      type,
+      comment,
+      screenshot,
+    });
+  } catch (err: any) {
+    return res.status(400).json({ error: err.message });
+  }
 
   return res.status(201).send();
 });

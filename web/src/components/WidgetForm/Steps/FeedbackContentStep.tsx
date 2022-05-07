@@ -1,5 +1,7 @@
 import { FormEvent, useState } from "react";
 import { FeedbackType, feedbackTypes } from "..";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { ArrowLeft } from "phosphor-react";
 
@@ -30,11 +32,36 @@ export function FeedbackContentStep({
 
     setIsSendingFeedback(true);
 
-    await api.post("/feedbacks", {
-      type: feedbackType,
-      comment,
-      screenshot,
-    });
+    if (!comment) {
+      toast.warning("Por favor, insira um comentário", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1500,
+      });
+      setIsSendingFeedback(false);
+      return;
+    }
+
+    if (comment.trim().length < 10) {
+      toast.warning("Insira um comentário com pelo menos 10 caracteres", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1500,
+      });
+      setIsSendingFeedback(false);
+      return;
+    }
+
+    try {
+      await api.post("/feedbacks", {
+        type: feedbackType,
+        comment,
+        screenshot,
+      });
+    } catch (error: any) {
+      toast.error(error.response.data.error, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1500,
+      });
+    }
 
     setIsSendingFeedback(false);
     onFeedbackSent();
